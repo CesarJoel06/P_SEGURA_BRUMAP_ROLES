@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>BRUMAP - Panel</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="bg-app">
+
+<!-- BARRA SUPERIOR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <!-- IZQUIERDA: logo + texto -->
+    <div class="top-left">
+      <img src="/assets/img/logo.png" class="top-logo" alt="BRUMAP">
+      <span class="top-brand">BRUMAP</span>
+    </div>
+
+    <!-- CENTRO: botones PDF con icono -->
+    <div class="top-center">
+      <button class="btn-small" data-pdf="recepciones">
+        <img src="/assets/img/icon_pdf.svg" alt="" class="icon-img">
+        <span>PDF Recepciones</span>
+      </button>
+      <button class="btn-small" data-pdf="produccion">
+        <img src="/assets/img/icon_pdf.svg" alt="" class="icon-img">
+        <span>PDF Producción</span>
+      </button>
+      <button class="btn-small" data-pdf="defectuosos">
+        <img src="/assets/img/icon_pdf.svg" alt="" class="icon-img">
+        <span>PDF Defectuosos</span>
+      </button>
+      <button class="btn-small" data-pdf="envios">
+        <img src="/assets/img/icon_pdf.svg" alt="" class="icon-img">
+        <span>PDF Envíos</span>
+      </button>
+      <button class="btn-small" data-pdf="registros" id="pdfAllRegistros">
+        <img src="/assets/img/icon_pdf.svg" alt="" class="icon-img">
+        <span>PDF Registros Completos</span>
+      </button>
+    </div>
+
+    <!-- DERECHA: salir -->
+    <div class="top-right">
+      <button class="btn-small" id="logoutBtn">
+        <img src="/assets/img/icon_logout.svg" alt="" class="icon-img">
+        <span>Salir</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MENÚ LATERAL -->
+<aside class="sidebar">
+  <nav class="menu">
+    <a class="menu-item active" href="#recepciones">
+      <img src="/assets/img/icon_recepciones.svg" alt="" class="icon-img">
+      <span>Recepción de Materiales</span>
+    </a>
+
+    <a class="menu-item" href="#produccion">
+      <img src="/assets/img/icon_produccion.svg" alt="" class="icon-img">
+      <span>Producción</span>
+    </a>
+
+    <a class="menu-item" href="#defectuosos">
+      <img src="/assets/img/icon_defectuosos.svg" alt="" class="icon-img">
+      <span>Manejo de Material Defectuoso</span>
+    </a>
+
+    <a class="menu-item" href="#envios">
+      <img src="/assets/img/icon_envios.svg" alt="" class="icon-img">
+      <span>Envío de Productos Terminados</span>
+    </a>
+
+    <a class="menu-item only-supervisor" href="#usuarios">
+      <img src="/assets/img/icon_users.svg" alt="" class="icon-img">
+      <span>Admin. Usuarios</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <span id="whoami" class="tag">...</span>
+  </div>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="workspace">
+
+  <!-- RECEPCIÓN -->
+  <section class="section" id="recepciones">
+    <h3 class="panel-title">Recepción de Materiales</h3>
+
+    <form class="form two-col card" data-form="recepciones">
+      <input class="input" placeholder="Tipo de material" name="tipo" required>
+
+      <!-- Cantidad + unidad -->
+      <input class="input input-qty" placeholder="Cantidad" name="cantidad" type="number" min="1" required>
+      <select class="input" name="unidad" required>
+        <option value="kg">Kilogramos</option>
+        <option value="cajas">Cajas</option>
+        <option value="unidades">Unidades</option>
+      </select>
+
+      <!-- Fecha y hora -->
+      <input class="input input-datetime" type="datetime-local" name="fecha" required>
+
+      <div class="col-span">
+        <button class="btn btn-primary" type="submit">Registrar Recepción</button>
+      </div>
+    </form>
+
+    <div class="card mt-lg">
+      <table class="table" data-table="recepciones">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRODUCCIÓN -->
+  <section class="section" id="produccion">
+    <h3 class="panel-title">Producción</h3>
+
+    <form class="form two-col card" data-form="produccion">
+      <!-- Fecha y hora única -->
+      <input
+        class="input input-datetime"
+        type="datetime-local"
+        name="fecha_ini"
+        placeholder="Fecha y hora de producción"
+        required
+      >
+
+      <!-- Tipo de producto -->
+      <input class="input" placeholder="Tipo de producto" name="tipo" required>
+
+      <!-- Cantidad + unidad -->
+      <input class="input input-qty" placeholder="Cantidad Fabricada" name="cantidad" type="number" min="1" required>
+      <select class="input" name="unidad" required>
+        <option value="kg">Kilogramos</option>
+        <option value="cajas">Cajas</option>
+        <option value="unidades">Unidades</option>
+      </select>
+
+      <div class="col-span">
+        <button class="btn btn-primary" type="submit">Registrar Producción</button>
+      </div>
+    </form>
+
+    <div class="card mt-lg">
+      <table class="table" data-table="produccion">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo de producto</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DEFECTUOSOS -->
+  <section class="section" id="defectuosos">
+    <h3 class="panel-title">Manejo de Material Defectuoso</h3>
+
+    <form class="form two-col card" data-form="defectuosos">
+      <input class="input" placeholder="Tipo de material" name="tipo" required>
+
+      <!-- Cantidad + unidad -->
+      <input class="input input-qty" placeholder="Cantidad descartada" name="cantidad" type="number" min="1" required>
+      <select class="input" name="unidad" required>
+        <option value="kg">Kilogramos</option>
+        <option value="cajas">Cajas</option>
+        <option value="unidades">Unidades</option>
+      </select>
+
+      <input class="input col-span" placeholder="Razón del descarte" name="razon">
+
+      <!-- Fecha -->
+      <input class="input input-date" type="date" name="fecha" required>
+
+      <div class="col-span">
+        <button class="btn btn-primary" type="submit">Registrar Descarte</button>
+      </div>
+    </form>
+
+    <div class="card mt-lg">
+      <table class="table" data-table="defectuosos">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+            <th>Razón</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ENVÍOS -->
+  <section class="section" id="envios">
+    <h3 class="panel-title">Envío de Productos Terminados</h3>
+
+    <form class="form two-col card" data-form="envios">
+      <!-- Cantidad + unidad -->
+      <input class="input input-qty" placeholder="Cantidad" name="cantidad" type="number" min="1" required>
+      <select class="input" name="unidad" required>
+        <option value="kg">Kilogramos</option>
+        <option value="cajas">Cajas</option>
+        <option value="unidades">Unidades</option>
+      </select>
+
+      <input class="input" placeholder="Tipo (ej: Rollos PEAD)" name="tipo" required>
+      <input class="input col-span" placeholder="Detalle del tipo (texto)" name="descripcion">
+      <input class="input" placeholder="Cliente" name="cliente" required>
+
+      <!-- Fecha -->
+      <input class="input input-date" type="date" name="fecha" required>
+
+      <div class="col-span">
+        <button class="btn btn-primary" type="submit">Registrar Envío</button>
+      </div>
+    </form>
+
+    <div class="card mt-lg">
+      <table class="table" data-table="envios">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Tipo</th>
+            <th>Detalle</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- USUARIOS -->
+  <section class="section only-supervisor" id="usuarios">
+    <h3 class="panel-title">Gestión de Usuarios</h3>
+    <div class="card form vertical">
+      <div class="actions-row">
+        <input id="nu_user" class="input inline-edit" placeholder="usuario">
+        <select id="nu_role" class="input inline-edit">
+          <option>operario</option>
+          <option>supervisor</option>
+          <option>administrador</option>
+        </select>
+        <!--
+          Antes: type="text" y value="admin".
+          Ahora: type="password", sin valor por defecto visible.
+          El backend ya tiene fallback a "admin" si viene vacío,
+          por lo que la funcionalidad se mantiene.
+        -->
+        <input
+          id="nu_pass"
+          class="input inline-edit"
+          type="password"
+          placeholder="contraseña (opcional, por defecto definida por el sistema)"
+          autocomplete="new-password"
+        >
+        <button id="addUser" class="btn-small">
+          <img src="/assets/img/icon_users.svg" alt="" class="icon-img">
+          <span>Añadir</span>
+        </button>
+      </div>
+      <table class="table" id="usersTable">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="/assets/js/app.js?v=14"></script>
+</body>
+</html>
