@@ -368,6 +368,11 @@ async function loginHandler(req, res) {
 
 app.post('/api/auth/login', loginHandler);
 app.post('/login', loginHandler);
+// Si alguien entra por GET a /api/auth/login, redirigimos al login normal
+app.get('/api/auth/login', (req, res) => {
+  return res.redirect('/');
+});
+
 
 // OWASP A07 – Logout destruye la sesión en el servidor
 app.post('/api/auth/logout', requireAuth, (req, res) => {
