@@ -146,6 +146,9 @@ function formatDateTimeYmdToDmy(s) {
 app.disable('x-powered-by');
 
 // OWASP A05 – Cabeceras de seguridad (CSP, referrerPolicy) para reducir XSS, clickjacking y fugas de info
+// OWASP A05 – Cabeceras de seguridad (CSP, referrerPolicy) para reducir XSS, clickjacking y fugas de info
+// Ajustado para que el navegador NO fuerce HTTP→HTTPS (upgrade-insecure-requests)
+// y para permitir estilos inline básicos si los hubiera.
 app.use(helmet({
   contentSecurityPolicy: {
     useDefaults: true,
@@ -153,15 +156,18 @@ app.use(helmet({
       "default-src": ["'self'"],
       "script-src": ["'self'"],
       "img-src": ["'self'", "data:"],
-      "style-src": ["'self'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
       "object-src": ["'none'"],
       "frame-ancestors": ["'none'"],
       "base-uri": ["'self'"],
-      "form-action": ["'self'"]
+      "form-action": ["'self'"],
+      // Desactivar upgrade-insecure-requests que Helmet pone por defecto con useDefaults
+      "upgrade-insecure-requests": null
     }
   },
   referrerPolicy: { policy: "no-referrer" }
 }));
+
 
 app.use(compression());
 
