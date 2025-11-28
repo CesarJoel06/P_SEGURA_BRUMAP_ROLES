@@ -24,6 +24,9 @@ const PORT = process.env.PORT || 3000;
 const COOKIE_SECURE = process.env.COOKIE_SECURE === '1';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const IS_PROD = NODE_ENV === 'production';
+// Detrás de Nginx/Cloudflare, confiar en el primer proxy para que req.secure funcione
+app.set('trust proxy', 1);
+
 
 // OWASP A05 – Uso de rutas internas controladas para datos, sin entrada del usuario
 const DATA_DIR = path.join(__dirname, 'data');
@@ -192,6 +195,7 @@ app.use(session({
   secret: SESSION_SECRET || 'dev_secret_change_me',
   resave: false,
   saveUninitialized: false,
+  proxy: true, // importante cuando estamos detrás de Nginx/Cloudflare
   cookie: {
     httpOnly: true,
     sameSite: 'lax',
